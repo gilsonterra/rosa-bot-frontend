@@ -4,7 +4,9 @@
         <div class="column col-6">
             <ul class="pagination">
                 <li>
-                    <span class="text-italic">Mostrando de { start } até { end } de { total } registros.</span>
+                    <span class="text-italic">
+                        <span class="text-capitalize">{ _t('showing') }</span> <b>{ start }</b> { _t('to') } <b>{ end } </b>{ _t('of') } <b>{ total }</b> { _t('records') }.
+                    </span>
                 </li>
             </ul>
         </div>

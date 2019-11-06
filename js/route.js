@@ -22,4 +22,16 @@ route('/view/*', function (id) {
     });
 });
 
+route('/print/*', function (id) {
+    Load.js('tags/options-yes-no.js').then(function(){
+        Load.js('tags/complaint-print.js').then(function () {
+            Request.get( APP.getApiUrl('/complaint/status/' + id ), function (json) {
+                riot.mount('#view', 'complaint-print', {
+                    'data': json,
+                });
+            });
+        });
+    });
+});
+
 route.start(true);

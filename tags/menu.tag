@@ -1,5 +1,5 @@
 <menu>
-    <header class="navbar">
+    <header class="navbar no-print">
         <section class="navbar-section">
             <div class="tile tile-centered">
                 <div class="tile-icon">

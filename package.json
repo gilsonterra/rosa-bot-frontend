@@ -1,5 +1,5 @@
 {
-  "name": "skeleton-spa",
+  "name": "rosa-bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -24,12 +24,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fredcido/fe-ims-intelligence.git"
+    "url": "git+https://github.com/paulo-amaral/rosa-bot-frontend.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fredcido/fe-ims-intelligence/issues"
+    "url": "https://github.com/paulo-amaral/rosa-bot-frontend/issues"
   },
-  "homepage": "https://github.com/fredcido/fe-ims-intelligence#readme"
+  "homepage": "https://github.com/paulo-amaral/rosa-bot-frontend#readme"
 }

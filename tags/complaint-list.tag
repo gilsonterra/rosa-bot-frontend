@@ -24,29 +24,31 @@
                 <thead>
                     <tr class="bg-secondary">
                         <th class="col-1 text-capitalize">{ _t("id") }</th>
-                        <th class="col-2 text-capitalize">{ _t("username") }</th>
-                        <th class="col-2 text-capitalize">{ _t("dataassedio") }</th>
-                        <th class="col-2 text-capitalize">{ _t("vitima") }</th>
-                        <th class="col-2 text-capitalize">{ _t("observacao") }</th>
+                        <th class="col-2 text-capitalize">{ _t("name") }</th>
+                        <th class="col-2 text-capitalize">{ _t("date_harassment") }</th>
+                        <th class="col-2 text-capitalize">{ _t("date_complaint") }</th>
+                        <th class="col-2 text-capitalize">{ _t("victim") }</th>
+                        <th class="col-2 text-capitalize">{ _t("notes") }</th>
                         <th class="col-2 text-capitalize">{ _t("status") }</th>
                         <th class="col-1 text-capitalize">{ _t("actions") }</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr if="{ loading}">
-                        <td colspan="7">
+                        <td colspan="8">
                             <div class="loading loading-lg"></div>
                         </td>
                     </tr>
                     <tr if="{ !loading && items.length <= 0 }">
-                        <td colspan="7">
+                        <td colspan="8">
                             <span class="text-capitalize">{ _t("not_records_found") }</span>
                         </td>
                     </tr>
                     <tr if="{ !loading && items.length > 0 }" each="{ item in items }">
                         <td>{ item._id }</td>
                         <td>{ item.username }</td>
-                        <td>{ item.dataassedio }</td>
+                        <td>{ item.datassedio }</td>
+                        <td>{ item.dataqueixa }</td>
                         <td>{ item.vitima }</td>
                         <td>{ item.observacao }</td>
                         <td>{ item.status }</td>
@@ -84,7 +86,21 @@
                     'items': json.items,
                     'loading': false
                 });
-                riot.mount('pagination', json);
+
+                var actions = {
+                    onPrev: function(){
+                        var page = parseInt(json.page) - 1;
+                        var newUrl = APP.getApiUrl('complaint/search?' + '&page=' + page);
+                        return requestApi(newUrl);
+                    },
+                    onNext: function(){
+                        var page = parseInt(json.page) + 1;
+                        var newUrl = APP.getApiUrl('complaint/search?' + '&page=' + page);
+                        return requestApi(newUrl);
+                    }
+                };
+
+                riot.mount('pagination', Object.assign(json, actions));
             });
         }
     </script>

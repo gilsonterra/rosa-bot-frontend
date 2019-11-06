@@ -1,16 +1,66 @@
 <complaint-form>
+    <script>
+        var tag = this;
+        tag.data = opts.data || {};
+        tag.onSubmit = onSubmit;
+        tag.closeModal = closeModal;
+
+        function closeModal(event) {
+            showModal(false);
+        }
+
+        function showModal(open, message) {
+            if (open) {
+                tag.refs.modalInfo.classList.add('active');
+            }
+            else {
+                tag.refs.modalInfo.classList.remove('active');
+            }
+
+            tag.refs.modalContent.innerHTML = message;
+        }
+
+        function onSubmit(event) {
+            event.preventDefault();
+
+            var formData = {
+                'status': tag.refs.status.value,
+                'observacao': tag.refs.observacao.value
+            };
+
+            Request.post(APP.getApiUrl('complaint/update/' + tag.data._id), JSON.stringify(formData), function (json) {
+
+                if (json.error) {
+                    showModal(true, json.error);
+                }
+                else {
+                    showModal(true, json.status);
+                }
+            });
+        }
+    </script>
+
+    <style>
+        span {
+            font-weight: bold;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+    </style>
+
     <form onsubmit="{ onSubmit }" class="form-horizontal">
         <div class="card" if="{ Object.keys(data).length > 0 }">
             <div class="card-header">
                 <div class="float-left">
-                    <div class="card-title text-uppercase"> { _t('complaint') }: #{ data._id } </div>
-                    <div class="card-subtitle text-gray">{ _t('datassedio') }</div>
+                    <div class="card-title text-uppercase"> { _t('complaint') }: <b>#{ data._id }</b> </div>
                 </div>
                 <div class="float-right">
                     <a class="btn btn-link mr-1 text-capitalize" href="/#"><i class="icon icon-back"></i> { _t('back')
                         }</a>
-                    <button type="submit" class="btn btn-secondary mr-1 text-capitalize" href="/"><i
-                            class="icon icon-edit"></i> { _t('edit') }</button>
+                    <button type="submit" class="btn btn-secondary mr-1 text-capitalize"><i class="icon icon-edit"></i>
+                        { _t('edit') }</button>
+                    <a class="btn btn-secondary mr-1 text-capitalize" target="_blank" href="/#print/{ data._id }"><i class="icon icon-photo"></i> { _t('print')
+                        }</a>
                 </div>
             </div>
             <div class="card-body">
@@ -111,7 +161,7 @@
                         </div>
                         <div class="column col-4 col-md-12">
                             <div class="form-group">
-                                <label class="form-label text-capitalize">{ _t('victm_name') }</label>
+                                <label class="form-label text-capitalize">{ _t('victim_name') }</label>
                                 <span>{ data.nomevitima }</span>
                             </div>
                         </div>
@@ -132,7 +182,7 @@
                         <div class="column col-4 col-md-12">
                             <div class="form-group">
                                 <label class="form-label text-capitalize">{ _t('potential_additional_victims') }</label>
-                                <span></span>
+                                <span>{ data.potential_additional_victims }</span>
                             </div>
                         </div>
                         <div class="column col-4 col-md-12">
@@ -321,7 +371,7 @@
                 <div class="columns">
                     <div class="column col-12 col-md-12">
                         <div class="form-group">
-                            <label class="form-label text-capitalize" for="observacoes">{ _t('observacao') }</label>
+                            <label class="form-label text-capitalize" for="observacoes">{ _t('notes') }</label>
                             <textarea class="form-input" name="observacao"
                                 ref="observacao">{ data.observacao }</textarea>
                         </div>
@@ -345,54 +395,4 @@
             </div>
         </div>
     </div>
-
-
-    <style>
-        span {
-            font-weight: bold;
-            width: 100%;
-            padding-bottom: 10px;
-        }
-    </style>
-
-    <script>
-        var tag = this;
-        tag.data = opts.data || {};
-        tag.onSubmit = onSubmit;
-        tag.closeModal = closeModal;
-
-        function closeModal(event) {
-            showModal(false);
-        }
-
-        function showModal(open, message) {
-            if (open) {
-                tag.refs.modalInfo.classList.add('active');
-            }
-            else {
-                tag.refs.modalInfo.classList.remove('active');
-            }
-
-            tag.refs.modalContent.innerHTML = message;
-        }
-
-        function onSubmit(event) {
-            event.preventDefault();
-
-            var formData = {
-                'status': tag.refs.status.value,
-                'observacao': tag.refs.observacao.value
-            };
-
-            Request.post(APP.getApiUrl('complaint/update/' + tag.data._id), JSON.stringify(formData), function (json) {
-
-                if (json.error) {
-                    showModal(true, json.error);
-                }
-                else {
-                    showModal(true, json.status);
-                }
-            });
-        }
-    </script>
 </complaint-form>

@@ -1,4 +1,4 @@
-var cacheName = 'fe-ims-intelligence-v1';
+var cacheName = 'rosa-bot';
 var filesToCache = [
     '/',
     'index.html',
